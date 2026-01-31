@@ -8,9 +8,9 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ath11k-firmware
-PKG_SOURCE_DATE:=2024-10-14
-PKG_SOURCE_VERSION:=15f050122da5ef5bef2cc8c7c19dfb7f98060a49
-PKG_MIRROR_HASH:=e7a89d1570f32552ade539376181494724b5eafb31d00451ff2dcf5a2922a0cb
+PKG_SOURCE_DATE:=2026-01-23
+PKG_SOURCE_VERSION:=53f9ee68543d66894854c32e1e968cb514c0880a
+PKG_MIRROR_HASH:=3a1baa8032541f6c752fc9be7eaa7f3c8df352f1d0a8e0977373904af7f2669d
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
@@ -65,6 +65,11 @@ endef
 define Package/ath11k-firmware-ipq8074
 $(Package/ath11k-firmware-default)
   TITLE:=IPQ8074 ath11k firmware
+endef
+
+define Package/ath11k-firmware-ipq9574
+$(Package/ath11k-firmware-default)
+  TITLE:=IPQ9574 ath11k firmware
 endef
 
 define Package/ath11k-firmware-qcn9074
@@ -123,6 +128,12 @@ define Package/ath11k-firmware-ipq8074/install
 		$(1)/lib/firmware/IPQ8074/
 endef
 
+define Package/ath11k-firmware-ipq9574/install
+	$(INSTALL_DIR) $(1)/lib/firmware/ath11k/IPQ9574/hw1.0
+	$(INSTALL_BIN) \
+		$(PKG_BUILD_DIR)/IPQ9574/hw1.0/board-2.bin $(1)/lib/firmware/ath11k/IPQ9574/hw1.0/board-2.bin
+endef
+
 define Package/ath11k-firmware-qcn9074/install
 	$(INSTALL_DIR) $(1)/lib/firmware/ath11k/QCN9074/hw1.0
 	$(INSTALL_DATA) \
@@ -136,4 +147,5 @@ $(eval $(call BuildPackage,ath11k-firmware-ipq5018))
 $(eval $(call BuildPackage,ath11k-firmware-ipq5018-qcn6122))
 $(eval $(call BuildPackage,ath11k-firmware-ipq6018))
 $(eval $(call BuildPackage,ath11k-firmware-ipq8074))
+$(eval $(call BuildPackage,ath11k-firmware-ipq9574))
 $(eval $(call BuildPackage,ath11k-firmware-qcn9074))
